@@ -23,7 +23,19 @@ const postSingleQuiz = async (employee, timeLimit, question) => {
   return key;
 };
 
+const postAddQuestion = async (employee, timeLimit, question, id) => {
+  const key = datastore.key([QUIZ, parseInt(id, 10)]);
+  const newQuiz = {
+    employee: employee,
+    timeLimit: timeLimit,
+    question: question,
+  };
+  await datastore.save({ key: key, data: newQuiz });
+  return key;
+};
+
 module.exports = {
   getSingleQuiz,
   postSingleQuiz,
+  postAddQuestion,
 };
