@@ -9,7 +9,6 @@ const {
 const getQuiz = async (req, res, next) => {
   // get quiz from database and return JSON object
   const quiz = await getSingleQuiz(req.params.quiz_id);
-  const accepts = req.accepts()[0];
 
   // send back application/json
   res.status(200).json({

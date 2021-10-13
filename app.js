@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 
 const questionRoutes = require("./routes/question");
 const quizRoutes = require("./routes/quiz");
+const employeeRoutes = require("./routes/employee");
 const errorHandler = require("./error/error-handler");
 
 const app = express();
@@ -12,6 +13,7 @@ app.use(bodyParser.json());
 
 app.use("/question", questionRoutes);
 app.use("/quiz", quizRoutes);
+app.use("/employee", employeeRoutes);
 
 app.use(errorHandler);
 
