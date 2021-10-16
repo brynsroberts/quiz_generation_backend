@@ -1,4 +1,8 @@
-const { getSingleEmployee, postSingleEmployee } = require("../models/employee");
+const {
+  getSingleEmployee,
+  postSingleEmployee,
+  deleteSingleEmployee,
+} = require("../models/employee");
 
 const getEmployee = async (req, res, next) => {
   // get question from database and return JSON object
@@ -39,7 +43,14 @@ const postEmployee = async (req, res, next) => {
   });
 };
 
+const deleteEmployee = async (req, res, next) => {
+  // delete boat from database and return 204
+  await deleteSingleEmployee(req.params.employee_id);
+  res.status(204).end();
+};
+
 module.exports = {
   getEmployee,
   postEmployee,
+  deleteEmployee,
 };

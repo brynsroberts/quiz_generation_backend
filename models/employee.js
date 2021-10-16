@@ -34,10 +34,15 @@ const addQuizToEmployee = async (name, email, quiz, id) => {
   return key;
 };
 
-
+const deleteSingleEmployee = async (employee_id) => {
+  const key = datastore.key([EMPLOYEE, parseInt(employee_id, 10)]);
+  await datastore.delete(key);
+  return;
+};
 
 module.exports = {
   getSingleEmployee,
   postSingleEmployee,
   addQuizToEmployee,
+  deleteSingleEmployee,
 };
