@@ -24,7 +24,14 @@ const postSingleQuestion = async (type, points, question, answer) => {
   return key;
 };
 
+const deleteSingleQuestion = async (question_id) => {
+  const key = datastore.key([QUESTION, parseInt(question_id, 10)]);
+  await datastore.delete(key);
+  return;
+};
+
 module.exports = {
   getSingleQuestion,
   postSingleQuestion,
+  deleteSingleQuestion,
 };

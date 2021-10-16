@@ -44,6 +44,10 @@ const postEmployee = async (req, res, next) => {
 };
 
 const deleteEmployee = async (req, res, next) => {
+
+  // delete all quizes associated with that employee
+  
+
   // delete boat from database and return 204
   await deleteSingleEmployee(req.params.employee_id);
   res.status(204).end();

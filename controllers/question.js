@@ -1,12 +1,16 @@
-const { getSingleQuestion, postSingleQuestion } = require("../models/question");
+const {
+  getSingleQuestion,
+  postSingleQuestion,
+  deleteSingleQuestion,
+} = require("../models/question");
 
 const getQuestion = async (req, res, next) => {
   // get question from database and return JSON object
-  const question = await getSingleQuestion(req.params.id);
+  const question = await getSingleQuestion(req.params.question_id);
 
   // send back application/json
   res.status(200).json({
-    id: req.params.id,
+    id: req.params.question_id,
     ...question[0],
 
     // generate self URL on the spot
@@ -16,7 +20,7 @@ const getQuestion = async (req, res, next) => {
       req.get("host") +
       req.baseUrl +
       "/" +
-      req.params.id,
+      req.params.question_id,
   });
 };
 
@@ -40,7 +44,14 @@ const postQuestion = async (req, res, next) => {
   });
 };
 
+const deleteQuestion = async (req, res, next) => {
+  // delete boat from database and return 204
+  await deleteSingleQuestion(req.params.question_id);
+  res.status(204).end();
+};
+
 module.exports = {
   getQuestion,
   postQuestion,
+  deleteQuestion,
 };
