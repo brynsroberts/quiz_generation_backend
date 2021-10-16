@@ -23,7 +23,21 @@ const postSingleEmployee = async (name, email) => {
   return key;
 };
 
+const addQuizToEmployee = async (name, email, quiz, id) => {
+  const key = datastore.key([EMPLOYEE, parseInt(id, 10)]);
+  const newEmployee = {
+    name: name,
+    email: email,
+    quiz: quiz,
+  };
+  await datastore.save({ key: key, data: newEmployee });
+  return key;
+};
+
+
+
 module.exports = {
   getSingleEmployee,
   postSingleEmployee,
+  addQuizToEmployee,
 };

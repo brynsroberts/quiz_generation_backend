@@ -5,6 +5,7 @@ const {
   postSingleQuiz,
   postAddQuestion,
 } = require("../models/quiz");
+const { addQuizToEmployee } = require("../models/employee");
 
 const getQuiz = async (req, res, next) => {
   // get quiz from database and return JSON object
@@ -33,6 +34,25 @@ const postQuiz = async (req, res, next) => {
   // post question to server using modal function
   const key = await postSingleQuiz(employee, timeLimit, question);
 
+  // get current employee
+  const employee_self =
+    req.protocol + "://" + req.get("host") + "/employee/" + employee;
+  const current_employee = await axios.get(employee_self);
+
+  // add current quiz to employee
+  const quiz_self =
+    req.protocol + "://" + req.get("host") + req.baseUrl + "/" + key.id;
+  console.log("quiz_self");
+
+  current_employee["data"]["quiz"].push({
+    quiz_id: key.id,
+    self: quiz_self,
+  });
+
+  // update quiz in database
+  const { name, email, quiz } = current_employee["data"];
+  await addQuizToEmployee(name, email, quiz, employee);
+
   // send back 201 response with values in json format
   res.status(201).json({
     id: key.id,
@@ -41,7 +61,7 @@ const postQuiz = async (req, res, next) => {
     question: question,
 
     // generate self URL on the spot
-    self: req.protocol + "://" + req.get("host") + req.baseUrl + "/" + key.id,
+    self: quiz_self,
   });
 };
 

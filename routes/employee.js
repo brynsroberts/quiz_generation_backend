@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { getEmployee, postEmployee } = require("../controllers/employee");
+const { getEmployee, postEmployee, addQuizToEmployee } = require("../controllers/employee");
 
 const router = express.Router();
 
