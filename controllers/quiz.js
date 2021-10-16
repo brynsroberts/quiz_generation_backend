@@ -4,6 +4,7 @@ const {
   getSingleQuiz,
   postSingleQuiz,
   postAddQuestion,
+  deleteSingleQuiz,
 } = require("../models/quiz");
 const { addQuizToEmployee } = require("../models/employee");
 
@@ -42,7 +43,6 @@ const postQuiz = async (req, res, next) => {
   // add current quiz to employee
   const quiz_self =
     req.protocol + "://" + req.get("host") + req.baseUrl + "/" + key.id;
-  console.log("quiz_self");
 
   current_employee["data"]["quiz"].push({
     quiz_id: key.id,
@@ -102,8 +102,15 @@ const addQuestion = async (req, res, next) => {
   });
 };
 
+const deleteQuiz = async (req, res, next) => {
+  // delete quiz from database and return 204
+  await deleteSingleQuiz(req.params.quiz_id);
+  res.status(204).end();
+};
+
 module.exports = {
   getQuiz,
   postQuiz,
   addQuestion,
+  deleteQuiz,
 };

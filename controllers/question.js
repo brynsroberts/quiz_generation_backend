@@ -45,7 +45,7 @@ const postQuestion = async (req, res, next) => {
 };
 
 const deleteQuestion = async (req, res, next) => {
-  // delete boat from database and return 204
+  // delete quiz from database and return 204
   await deleteSingleQuestion(req.params.question_id);
   res.status(204).end();
 };

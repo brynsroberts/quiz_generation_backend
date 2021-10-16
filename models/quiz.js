@@ -34,8 +34,15 @@ const postAddQuestion = async (employee, timeLimit, question, id) => {
   return key;
 };
 
+const deleteSingleQuiz = async (quiz_id) => {
+  const key = datastore.key([QUIZ, parseInt(quiz_id, 10)]);
+  await datastore.delete(key);
+  return;
+};
+
 module.exports = {
   getSingleQuiz,
   postSingleQuiz,
   postAddQuestion,
+  deleteSingleQuiz,
 };
