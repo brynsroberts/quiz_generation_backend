@@ -1,5 +1,6 @@
 const axios = require("axios");
 
+const ApiError = require("../error/error");
 const {
   getSingleQuiz,
   postSingleQuiz,
@@ -13,20 +14,26 @@ const getQuiz = async (req, res, next) => {
   // get quiz from database and return JSON object
   const quiz = await getSingleQuiz(req.params.quiz_id);
 
-  // send back application/json
-  res.status(200).json({
-    id: req.params.quiz_id,
-    ...quiz[0],
+  // if quiz does not exist - send 404
+  if (quiz[0] === undefined) {
+    next(ApiError.notFound("No quiz with this quiz_id exists"));
 
-    // generate self URL on the spot
-    self:
-      req.protocol +
-      "://" +
-      req.get("host") +
-      req.baseUrl +
-      "/" +
-      req.params.quiz_id,
-  });
+    // send back application/json
+  } else {
+    res.status(200).json({
+      id: req.params.quiz_id,
+      ...quiz[0],
+
+      // generate self URL on the spot
+      self:
+        req.protocol +
+        "://" +
+        req.get("host") +
+        req.baseUrl +
+        "/" +
+        req.params.quiz_id,
+    });
+  }
 };
 
 const postQuiz = async (req, res, next) => {
@@ -108,40 +115,47 @@ const deleteQuiz = async (req, res, next) => {
   // get the quiz
   const quiz = await getSingleQuiz(req.params.quiz_id);
 
-  // iterate through questions in the quiz and delete each question
-  // use for loop to not get await problems using forEach loop
-  for (let i = 0; i < quiz[0]["question"].length; i++) {
-    await deleteSingleQuestion(quiz[0]["question"][i]["id"]);
-  }
+  // if quiz does not exist - send 404
+  if (quiz[0] === undefined) {
+    next(ApiError.notFound("No quiz with this quiz_id exists"));
 
-  // remove quiz from employee
-  // get employee
-  const employee = await getSingleEmployee(quiz[0]["employee"]);
-
-  //example used off stack overflow for removing element from javascript array
-  // https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array
-  // removed quiz from employee if quiz_id matches params quiz_id
-  let i = 0;
-  while (i < employee[0]["quiz"].length) {
-    if (employee[0]["quiz"][i]["quiz_id"] === req.params.quiz_id) {
-      employee[0]["quiz"].splice(i, 1);
-    } else {
-      i++;
+    // delete quiz
+  } else {
+    // iterate through questions in the quiz and delete each question
+    // use for loop to not get await problems using forEach loop
+    for (let i = 0; i < quiz[0]["question"].length; i++) {
+      await deleteSingleQuestion(quiz[0]["question"][i]["id"]);
     }
+
+    // remove quiz from employee
+    // get employee
+    const employee = await getSingleEmployee(quiz[0]["employee"]);
+
+    //example used off stack overflow for removing element from javascript array
+    // https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array
+    // removed quiz from employee if quiz_id matches params quiz_id
+    let i = 0;
+    while (i < employee[0]["quiz"].length) {
+      if (employee[0]["quiz"][i]["quiz_id"] === req.params.quiz_id) {
+        employee[0]["quiz"].splice(i, 1);
+      } else {
+        i++;
+      }
+    }
+
+    // update employee quiz
+    const { name, email } = employee[0];
+    await updateEmployeeQuiz(
+      name,
+      email,
+      employee[0]["quiz"],
+      quiz[0]["employee"]
+    );
+
+    // delete quiz from database and return 204
+    await deleteSingleQuiz(req.params.quiz_id);
+    res.status(204).end();
   }
-
-  // update employee quiz
-  const { name, email } = employee[0];
-  await updateEmployeeQuiz(
-    name,
-    email,
-    employee[0]["quiz"],
-    quiz[0]["employee"]
-  );
-
-  // delete quiz from database and return 204
-  await deleteSingleQuiz(req.params.quiz_id);
-  res.status(204).end();
 };
 
 module.exports = {
