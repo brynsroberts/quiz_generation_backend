@@ -6,7 +6,8 @@ const {
   postAddQuestion,
   deleteSingleQuiz,
 } = require("../models/quiz");
-const { addQuizToEmployee } = require("../models/employee");
+const { updateEmployeeQuiz, getSingleEmployee } = require("../models/employee");
+const { deleteSingleQuestion } = require("../models/question");
 
 const getQuiz = async (req, res, next) => {
   // get quiz from database and return JSON object
@@ -51,7 +52,7 @@ const postQuiz = async (req, res, next) => {
 
   // update quiz in database
   const { name, email, quiz } = current_employee["data"];
-  await addQuizToEmployee(name, email, quiz, employee);
+  await updateEmployeeQuiz(name, email, quiz, employee);
 
   // send back 201 response with values in json format
   res.status(201).json({
@@ -103,6 +104,40 @@ const addQuestion = async (req, res, next) => {
 };
 
 const deleteQuiz = async (req, res, next) => {
+  // delete every question from the quiz
+  // get the quiz
+  const quiz = await getSingleQuiz(req.params.quiz_id);
+
+  // iterate through questions in the quiz and delete each question
+  quiz[0]["question"].forEach((question) => {
+    deleteSingleQuestion(question["id"]);
+  });
+
+  // remove quiz from employee
+  // get employee
+  const employee = await getSingleEmployee(quiz[0]["employee"]);
+
+  //example used off stack overflow for removing element from javascript array
+  // https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array
+  // removed quiz from employee if quiz_id matches params quiz_id
+  let i = 0;
+  while (i < employee[0]["quiz"].length) {
+    if (employee[0]["quiz"][i]["quiz_id"] === req.params.quiz_id) {
+      employee[0]["quiz"].splice(i, 1);
+    } else {
+      i++;
+    }
+  }
+
+  // update employee quiz
+  const { name, email } = employee[0];
+  await updateEmployeeQuiz(
+    name,
+    email,
+    employee[0]["quiz"],
+    quiz[0]["employee"]
+  );
+
   // delete quiz from database and return 204
   await deleteSingleQuiz(req.params.quiz_id);
   res.status(204).end();

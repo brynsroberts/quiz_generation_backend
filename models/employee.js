@@ -23,7 +23,7 @@ const postSingleEmployee = async (name, email) => {
   return key;
 };
 
-const addQuizToEmployee = async (name, email, quiz, id) => {
+const updateEmployeeQuiz = async (name, email, quiz, id) => {
   const key = datastore.key([EMPLOYEE, parseInt(id, 10)]);
   const newEmployee = {
     name: name,
@@ -43,6 +43,6 @@ const deleteSingleEmployee = async (employee_id) => {
 module.exports = {
   getSingleEmployee,
   postSingleEmployee,
-  addQuizToEmployee,
+  updateEmployeeQuiz,
   deleteSingleEmployee,
 };
