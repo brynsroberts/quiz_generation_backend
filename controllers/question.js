@@ -1,3 +1,4 @@
+const ApiError = require("../error/error");
 const {
   getSingleQuestion,
   postSingleQuestion,
@@ -8,20 +9,26 @@ const getQuestion = async (req, res, next) => {
   // get question from database and return JSON object
   const question = await getSingleQuestion(req.params.question_id);
 
-  // send back application/json
-  res.status(200).json({
-    id: req.params.question_id,
-    ...question[0],
+  // if question does not exist - send 404
+  if (question[0] === undefined) {
+    next(ApiError.notFound("No question with this question_id exists"));
 
-    // generate self URL on the spot
-    self:
-      req.protocol +
-      "://" +
-      req.get("host") +
-      req.baseUrl +
-      "/" +
-      req.params.question_id,
-  });
+    // send back application/json
+  } else {
+    res.status(200).json({
+      id: req.params.question_id,
+      ...question[0],
+
+      // generate self URL on the spot
+      self:
+        req.protocol +
+        "://" +
+        req.get("host") +
+        req.baseUrl +
+        "/" +
+        req.params.question_id,
+    });
+  }
 };
 
 const postQuestion = async (req, res, next) => {
@@ -45,9 +52,18 @@ const postQuestion = async (req, res, next) => {
 };
 
 const deleteQuestion = async (req, res, next) => {
-  // delete quiz from database and return 204
-  await deleteSingleQuestion(req.params.question_id);
-  res.status(204).end();
+  // make sure question exists
+  const question = await getSingleQuestion(req.params.question_id);
+
+  // if question does not exist - send 404
+  if (question[0] === undefined) {
+    next(ApiError.notFound("No question with this question_id exists"));
+
+    // else delete question - send 204
+  } else {
+    await deleteSingleQuestion(req.params.question_id);
+    res.status(204).end();
+  }
 };
 
 module.exports = {
