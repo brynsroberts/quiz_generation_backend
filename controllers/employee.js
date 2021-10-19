@@ -5,6 +5,8 @@ const {
   postSingleEmployee,
   deleteSingleEmployee,
 } = require("../models/employee");
+const { getSingleQuiz, deleteSingleQuiz } = require("../models/quiz");
+const { deleteSingleQuestion } = require("../models/question");
 
 const getEmployee = async (req, res, next) => {
   // get question from database and return JSON object
@@ -47,7 +49,25 @@ const postEmployee = async (req, res, next) => {
 
 const deleteEmployee = async (req, res, next) => {
   // delete all quizes associated with that employee
+  // need to do this manually
   const employee = await getSingleEmployee(req.params.employee_id);
+
+  // delete all quizes stored by employee
+  // iterate through quizes in the employee and delete each question
+  // use for loop to not get await problems using forEach loop
+  for (let i = 0; i < employee[0]["quiz"].length; i++) {
+    // get the current quiz id
+    let quiz_id = employee[0]["quiz"][i]["quiz_id"];
+    const quiz = await getSingleQuiz(quiz_id);
+
+    // iterate through each question in the quiz and delete the question
+    for (let j = 0; j < quiz[0]["question"].length; j++) {
+      await deleteSingleQuestion(quiz[0]["question"][j]["id"]);
+    }
+
+    // delete the quiz
+    await deleteSingleQuiz(quiz_id);
+  }
 
   // delete quiz from database and return 204
   await deleteSingleEmployee(req.params.employee_id);
