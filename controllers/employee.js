@@ -1,3 +1,5 @@
+const axios = require("axios");
+
 const {
   getSingleEmployee,
   postSingleEmployee,
@@ -44,9 +46,8 @@ const postEmployee = async (req, res, next) => {
 };
 
 const deleteEmployee = async (req, res, next) => {
-
   // delete all quizes associated with that employee
-
+  const employee = await getSingleEmployee(req.params.employee_id);
 
   // delete quiz from database and return 204
   await deleteSingleEmployee(req.params.employee_id);

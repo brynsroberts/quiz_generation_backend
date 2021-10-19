@@ -109,9 +109,10 @@ const deleteQuiz = async (req, res, next) => {
   const quiz = await getSingleQuiz(req.params.quiz_id);
 
   // iterate through questions in the quiz and delete each question
-  quiz[0]["question"].forEach((question) => {
-    deleteSingleQuestion(question["id"]);
-  });
+  // use for loop to not get await problems using forEach loop
+  for (let i = 0; i < quiz[0]["question"].length; i++) {
+    await deleteSingleQuestion(quiz[0]["question"][i]["id"]);
+  }
 
   // remove quiz from employee
   // get employee
