@@ -40,37 +40,49 @@ const postQuiz = async (req, res, next) => {
   // get values from request body
   const { employee, timeLimit, question } = req.body;
 
-  // post question to server using modal function
-  const key = await postSingleQuiz(employee, timeLimit, question);
+  // request must contain employee, timeLimit and question attributes
+  if (employee === undefined) {
+    next(ApiError.badRequest("Request body is missing employee attribute"));
+  } else if (timeLimit === undefined) {
+    next(ApiError.badRequest("Request body is missing timeLimit attribute"));
+  } else if (question === undefined) {
+    next(ApiError.badRequest("Request body is missing question attribute"));
+  }
 
-  // get current employee
-  const employee_self =
-    req.protocol + "://" + req.get("host") + "/employee/" + employee;
-  const current_employee = await axios.get(employee_self);
+  // POST quiz
+  else {
+    // post question to server using modal function
+    const key = await postSingleQuiz(employee, timeLimit, question);
 
-  // add current quiz to employee
-  const quiz_self =
-    req.protocol + "://" + req.get("host") + req.baseUrl + "/" + key.id;
+    // get current employee
+    const employee_self =
+      req.protocol + "://" + req.get("host") + "/employee/" + employee;
+    const current_employee = await axios.get(employee_self);
 
-  current_employee["data"]["quiz"].push({
-    quiz_id: key.id,
-    self: quiz_self,
-  });
+    // add current quiz to employee
+    const quiz_self =
+      req.protocol + "://" + req.get("host") + req.baseUrl + "/" + key.id;
 
-  // update quiz in database
-  const { name, email, quiz } = current_employee["data"];
-  await updateEmployeeQuiz(name, email, quiz, employee);
+    current_employee["data"]["quiz"].push({
+      quiz_id: key.id,
+      self: quiz_self,
+    });
 
-  // send back 201 response with values in json format
-  res.status(201).json({
-    id: key.id,
-    employee: employee,
-    timeLimit: timeLimit,
-    question: question,
+    // update quiz in database
+    const { name, email, quiz } = current_employee["data"];
+    await updateEmployeeQuiz(name, email, quiz, employee);
 
-    // generate self URL on the spot
-    self: quiz_self,
-  });
+    // send back 201 response with values in json format
+    res.status(201).json({
+      id: key.id,
+      employee: employee,
+      timeLimit: timeLimit,
+      question: question,
+
+      // generate self URL on the spot
+      self: quiz_self,
+    });
+  }
 };
 
 const addQuestion = async (req, res, next) => {

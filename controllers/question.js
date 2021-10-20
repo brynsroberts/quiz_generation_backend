@@ -35,20 +35,34 @@ const postQuestion = async (req, res, next) => {
   // get values from request body
   const { type, points, question, answer } = req.body;
 
-  // post question to server using modal function
-  const key = await postSingleQuestion(type, points, question, answer);
+  // request must contain type, points, question and answer attributes
+  if (type === undefined) {
+    next(ApiError.badRequest("Request body is missing type attribute"));
+  } else if (points === undefined) {
+    next(ApiError.badRequest("Request body is missing points attribute"));
+  } else if (question === undefined) {
+    next(ApiError.badRequest("Request body is missing question attribute"));
+  } else if (answer === undefined) {
+    next(ApiError.badRequest("Request body is missing answer attribute"));
+  }
 
-  // send back 201 response with values in json format
-  res.status(201).json({
-    id: key.id,
-    type: type,
-    points: points,
-    question: question,
-    answer: answer,
+  // POST question
+  else {
+    // post question to server using modal function
+    const key = await postSingleQuestion(type, points, question, answer);
 
-    // generate self URL on the spot
-    self: req.protocol + "://" + req.get("host") + req.baseUrl + "/" + key.id,
-  });
+    // send back 201 response with values in json format
+    res.status(201).json({
+      id: key.id,
+      type: type,
+      points: points,
+      question: question,
+      answer: answer,
+
+      // generate self URL on the spot
+      self: req.protocol + "://" + req.get("host") + req.baseUrl + "/" + key.id,
+    });
+  }
 };
 
 const deleteQuestion = async (req, res, next) => {
