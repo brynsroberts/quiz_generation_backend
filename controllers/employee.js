@@ -39,19 +39,28 @@ const postEmployee = async (req, res, next) => {
   // get values from request body
   const { name, email } = req.body;
 
-  // post question to server using modal function
-  const key = await postSingleEmployee(name, email);
+  // request must contain name and email attributes
+  if (name === undefined) {
+    next(ApiError.badRequest("Request body is missing name attribute"));
+  } else if (email === undefined) {
+    next(ApiError.badRequest("Request body is missing email attribute"));
+  }
+  // make POST request
+  else {
+    // post question to server using modal function
+    const key = await postSingleEmployee(name, email);
 
-  // send back 201 response with values in json format
-  res.status(201).json({
-    id: key.id,
-    name: name,
-    email: email,
-    quiz: [],
+    // send back 201 response with values in json format
+    res.status(201).json({
+      id: key.id,
+      name: name,
+      email: email,
+      quiz: [],
 
-    // generate self URL on the spot
-    self: req.protocol + "://" + req.get("host") + req.baseUrl + "/" + key.id,
-  });
+      // generate self URL on the spot
+      self: req.protocol + "://" + req.get("host") + req.baseUrl + "/" + key.id,
+    });
+  }
 };
 
 const deleteEmployee = async (req, res, next) => {
