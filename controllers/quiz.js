@@ -8,7 +8,10 @@ const {
   deleteSingleQuiz,
 } = require("../models/quiz");
 const { updateEmployeeQuiz, getSingleEmployee } = require("../models/employee");
-const { deleteSingleQuestion } = require("../models/question");
+const {
+  deleteSingleQuestion,
+  getSingleQuestion,
+} = require("../models/question");
 
 const getQuiz = async (req, res, next) => {
   // get quiz from database and return JSON object
@@ -40,6 +43,11 @@ const postQuiz = async (req, res, next) => {
   // get values from request body
   const { employee, timeLimit, question } = req.body;
 
+  // get employee to make sure it exists in database
+  if (employee !== undefined) {
+    var database_employee = await getSingleEmployee(employee);
+  }
+
   // request must contain employee, timeLimit and question attributes
   if (employee === undefined) {
     next(ApiError.badRequest("Request body is missing employee attribute"));
@@ -47,6 +55,8 @@ const postQuiz = async (req, res, next) => {
     next(ApiError.badRequest("Request body is missing timeLimit attribute"));
   } else if (question === undefined) {
     next(ApiError.badRequest("Request body is missing question attribute"));
+  } else if (database_employee[0] === undefined) {
+    next(ApiError.notFound("No employee with this employee_id exists"));
   }
 
   // POST quiz
@@ -88,38 +98,55 @@ const postQuiz = async (req, res, next) => {
 const addQuestion = async (req, res, next) => {
   // get current quiz from database
   const quiz = await getSingleQuiz(req.params.quiz_id);
+  const curr_question = await getSingleQuestion(req.params.question_id);
 
-  // get question from database
-  const question_self =
-    req.protocol +
-    "://" +
-    req.get("host") +
-    "/question/" +
-    req.params.question_id;
-  const new_question = await axios.get(question_self);
+  // if quiz does not exist - send 404
+  if (quiz[0] === undefined) {
+    next(ApiError.notFound("No quiz with this quiz_id exists"));
+  } else if (curr_question[0] === undefined) {
+    next(ApiError.notFound("No question with this question_id exists"));
+  }
 
-  // add question to current quiz question array
-  quiz[0]["question"].push(new_question["data"]);
+  // add question to quiz
+  else {
+    // make new object with current questions attributes
+    const new_question = {
+      type: curr_question[0]["type"],
+      points: curr_question[0]["points"],
+      question: curr_question[0]["question"],
+      answer: curr_question[0]["answer"],
+      id: req.params.question_id,
+      self:
+        req.protocol +
+        "://" +
+        req.get("host") +
+        "/question/" +
+        req.params.question_id,
+    };
 
-  // update quiz in database
-  const { employee, timeLimit, question } = quiz[0];
-  const key = await postAddQuestion(
-    employee,
-    timeLimit,
-    question,
-    req.params.quiz_id
-  );
+    // add question to current quiz question array
+    quiz[0]["question"].push(new_question);
 
-  // send back 201 response with values in json format
-  res.status(201).json({
-    id: key.id,
-    employee: employee,
-    timeLimit: timeLimit,
-    question: question,
+    // update quiz in database
+    const { employee, timeLimit, question } = quiz[0];
+    const key = await postAddQuestion(
+      employee,
+      timeLimit,
+      question,
+      req.params.quiz_id
+    );
 
-    // generate self URL on the spot
-    self: req.protocol + "://" + req.get("host") + req.baseUrl + "/" + key.id,
-  });
+    // send back 201 response with values in json format
+    res.status(201).json({
+      id: key.id,
+      employee: employee,
+      timeLimit: timeLimit,
+      question: question,
+
+      // generate self URL on the spot
+      self: req.protocol + "://" + req.get("host") + req.baseUrl + "/" + key.id,
+    });
+  }
 };
 
 const deleteQuiz = async (req, res, next) => {
