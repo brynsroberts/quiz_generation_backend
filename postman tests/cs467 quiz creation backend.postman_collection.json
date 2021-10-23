@@ -1,0 +1,2102 @@
+{
+	"info": {
+		"_postman_id": "d62c9763-c2c7-4a32-8b3b-fa727007ddef",
+		"name": "cs467 quiz creation backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "add employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"employee_1\", pm.response.json()[\"id\"].toString());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"email@gmail.com\",\r\n  \"name\": \"Google\"\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/employee",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"employee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/employee/{{employee_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"employee",
+						"{{employee_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete employee with no quizes added",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/employee/{{employee_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"employee",
+						"{{employee_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ensure employee no longer exists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/employee/{{employee_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"employee",
+						"{{employee_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ensure employee that does not exist cannot be deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/employee/{{employee_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"employee",
+						"{{employee_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "error if adding employee with missing name field in body",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"email@gmail.com\"\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/employee",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"employee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "error if adding employee with missing email field in body",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Google\"\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/employee",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"employee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"employee_1\", pm.response.json()[\"id\"].toString());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"email@gmail.com\",\r\n  \"name\": \"Google\"\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/employee",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"employee"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add empty quiz",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"quiz_1\", pm.response.json()[\"id\"]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"employee\": \"{{employee_1}}\",\r\n  \"timeLimit\": 10,\r\n  \"question\": []\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/quiz",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"quiz"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get empty quiz",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/quiz/{{quiz_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"quiz",
+						"{{quiz_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "error if adding quiz with missing employee field in body",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"timeLimit\": 10,\r\n  \"question\": []\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/quiz",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"quiz"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "error if adding quiz with missing timeLimit field in body",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"employee\": \"{{employee_1}}\",\r\n  \"question\": []\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/quiz",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"quiz"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "error if adding quiz with missing question field in body",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"employee\": \"{{employee_1}}\",\r\n  \"timeLimit\": 10\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/quiz",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"quiz"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "error if adding quiz with employee id that doesn't exist in database",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"employee\": \"1\",\r\n  \"timeLimit\": 10,\r\n  \"question\": []\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/quiz",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"quiz"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete quiz",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/quiz/{{quiz_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"quiz",
+						"{{quiz_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ensure quiz no longer exists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/quiz/{{quiz_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"quiz",
+						"{{quiz_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ensure quiz that not exist cannot be deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/quiz/{{quiz_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"quiz",
+						"{{quiz_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add true/false question",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"question_type_1\", pm.response.json()[\"id\"]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"type\": 1,\r\n  \"points\": 5,\r\n  \"question\": \"Is 2 + 2 equal to 4?\",\r\n  \"answer\": true\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/question",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"question"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get true/false question",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/question/{{question_type_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"question",
+						"{{question_type_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete true/false question",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/question/{{question_type_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"question",
+						"{{question_type_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ensure true/false question no longer exists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/question/{{question_type_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"question",
+						"{{question_type_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ensure question that does not exist cannot be deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/question/{{question_type_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"question",
+						"{{question_type_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "error if adding question with missing type field in body",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"points\": 5,\r\n  \"question\": \"Is 2 + 2 equal to 4?\",\r\n  \"answer\": true\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/question",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"question"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "error if adding question with missing points field in body",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"type\": 1,\r\n  \"question\": \"Is 2 + 2 equal to 4?\",\r\n  \"answer\": true\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/question",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"question"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "error if adding question with missing question field in body",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"type\": 1,\r\n  \"points\": 5,\r\n  \"answer\": true\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/question",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"question"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "error if adding question with missing answer field in body",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"type\": 1,\r\n  \"points\": 5,\r\n  \"question\": \"Is 2 + 2 equal to 4?\"\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/question",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"question"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add empty quiz",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"quiz_1\", pm.response.json()[\"id\"]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"employee\": \"{{employee_1}}\",\r\n  \"timeLimit\": 10,\r\n  \"question\": []\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/quiz",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"quiz"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add question to quiz with bad quiz id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"type\": 1,\r\n  \"points\": 5,\r\n  \"question\": \"Is 2 + 2 equal to 4?\",\r\n  \"answer\": true\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/quiz/121/question/{{question_type_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"quiz",
+						"121",
+						"question",
+						"{{question_type_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ensure quiz has been added to employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/employee/{{employee_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"employee",
+						"{{employee_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add true/false question",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"question_type_1\", pm.response.json()[\"id\"]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"type\": 1,\r\n  \"points\": 5,\r\n  \"question\": \"Is 2 + 2 equal to 4?\",\r\n  \"answer\": true\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/question",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"question"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add true/false question to quiz",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"type\": 1,\r\n  \"points\": 5,\r\n  \"question\": \"Is 2 + 2 equal to 4?\",\r\n  \"answer\": true\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/quiz/{{quiz_1}}/question/{{question_type_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"quiz",
+						"{{quiz_1}}",
+						"question",
+						"{{question_type_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add multiple choice question",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"question_type_2\", pm.response.json()[\"id\"]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"type\": 2,\r\n  \"points\": 5,\r\n  \"question\": \"What is 2 + 2?\",\r\n  \"answer\": [\r\n      {\r\n          \"answer\": \"4\",\r\n          \"correct\": true\r\n      },\r\n      {\r\n          \"answer\": \"1\",\r\n          \"correct\": false\r\n      }\r\n  ]\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/question",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"question"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add multiple choice question to quiz",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"type\": 1,\r\n  \"points\": 5,\r\n  \"question\": \"Is 2 + 2 equal to 4?\",\r\n  \"answer\": true\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/quiz/{{quiz_1}}/question/{{question_type_2}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"quiz",
+						"{{quiz_1}}",
+						"question",
+						"{{question_type_2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get quiz with question added",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/quiz/{{quiz_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"quiz",
+						"{{quiz_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete quiz with added question",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/quiz/{{quiz_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"quiz",
+						"{{quiz_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ensure quiz has been deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/quiz/{{quiz_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"quiz",
+						"{{quiz_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ensure question from deleted quiz has been deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/question/{{question_type_2}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"question",
+						"{{question_type_2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ensure quiz has been deleted from the employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/employee/{{employee_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"employee",
+						"{{employee_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add empty quiz",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"quiz_1\", pm.response.json()[\"id\"]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"employee\": \"{{employee_1}}\",\r\n  \"timeLimit\": 10,\r\n  \"question\": []\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/quiz",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"quiz"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add true/false question",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"question_type_1\", pm.response.json()[\"id\"]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"type\": 1,\r\n  \"points\": 5,\r\n  \"question\": \"Is 2 + 2 equal to 4?\",\r\n  \"answer\": true\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/question",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"question"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add true/false question to quiz",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"type\": 1,\r\n  \"points\": 5,\r\n  \"question\": \"Is 2 + 2 equal to 4?\",\r\n  \"answer\": true\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/quiz/{{quiz_1}}/question/{{question_type_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"quiz",
+						"{{quiz_1}}",
+						"question",
+						"{{question_type_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add multiple choice question",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"question_type_2\", pm.response.json()[\"id\"]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"type\": 2,\r\n  \"points\": 5,\r\n  \"question\": \"What is 2 + 2?\",\r\n  \"answer\": [\r\n      {\r\n          \"answer\": \"4\",\r\n          \"correct\": true\r\n      },\r\n      {\r\n          \"answer\": \"1\",\r\n          \"correct\": false\r\n      }\r\n  ]\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/question",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"question"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add multiple choice question to quiz",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"type\": 1,\r\n  \"points\": 5,\r\n  \"question\": \"Is 2 + 2 equal to 4?\",\r\n  \"answer\": true\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/quiz/{{quiz_1}}/question/{{question_type_2}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"quiz",
+						"{{quiz_1}}",
+						"question",
+						"{{question_type_2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add empty quiz",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"quiz_2\", pm.response.json()[\"id\"]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"employee\": \"{{employee_1}}\",\r\n  \"timeLimit\": 10,\r\n  \"question\": []\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/quiz",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"quiz"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get employee with two quizes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/employee/{{employee_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"employee",
+						"{{employee_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get quiz 1 with two questions added",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/quiz/{{quiz_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"quiz",
+						"{{quiz_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete employee with quizes added to it",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/employee/{{employee_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"employee",
+						"{{employee_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ensure employee has been deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/employee/{{employee_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"employee",
+						"{{employee_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ensure quiz with questions has been deleted while deleting employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/quiz/{{quiz_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"quiz",
+						"{{quiz_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ensure questions from quiz has been deleted while deleting employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/question/{{question_type_2}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"question",
+						"{{question_type_2}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
