@@ -41,7 +41,7 @@ const getQuiz = async (req, res, next) => {
 
 const postQuiz = async (req, res, next) => {
   // get values from request body
-  const { employee, timeLimit, question } = req.body;
+  const { employee, timeLimit, question, title } = req.body;
 
   // get employee to make sure it exists in database
   if (employee !== undefined) {
@@ -57,12 +57,14 @@ const postQuiz = async (req, res, next) => {
     next(ApiError.badRequest("Request body is missing question attribute"));
   } else if (database_employee[0] === undefined) {
     next(ApiError.notFound("No employee with this employee_id exists"));
+  } else if (title === undefined) {
+    next(ApiError.badRequest("Request body is missing title attribute"));
   }
 
   // POST quiz
   else {
     // post question to server using modal function
-    const key = await postSingleQuiz(employee, timeLimit, question);
+    const key = await postSingleQuiz(employee, timeLimit, question, title);
 
     // get current employee
     const employee_self =
@@ -88,6 +90,7 @@ const postQuiz = async (req, res, next) => {
       employee: employee,
       timeLimit: timeLimit,
       question: question,
+      title: title,
 
       // generate self URL on the spot
       self: quiz_self,
@@ -128,11 +131,12 @@ const addQuestion = async (req, res, next) => {
     quiz[0]["question"].push(new_question);
 
     // update quiz in database
-    const { employee, timeLimit, question } = quiz[0];
+    const { employee, timeLimit, question, title } = quiz[0];
     const key = await postAddQuestion(
       employee,
       timeLimit,
       question,
+      title,
       req.params.quiz_id
     );
 
@@ -142,6 +146,7 @@ const addQuestion = async (req, res, next) => {
       employee: employee,
       timeLimit: timeLimit,
       question: question,
+      title: title,
 
       // generate self URL on the spot
       self: req.protocol + "://" + req.get("host") + req.baseUrl + "/" + key.id,

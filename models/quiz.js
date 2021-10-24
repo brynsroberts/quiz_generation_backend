@@ -12,23 +12,25 @@ const getSingleQuiz = async (id) => {
   return quiz;
 };
 
-const postSingleQuiz = async (employee, timeLimit, question) => {
+const postSingleQuiz = async (employee, timeLimit, question, title) => {
   const key = datastore.key(QUIZ);
   const newQuiz = {
     employee: employee,
     timeLimit: timeLimit,
     question: question,
+    title: title,
   };
   await datastore.save({ key: key, data: newQuiz });
   return key;
 };
 
-const postAddQuestion = async (employee, timeLimit, question, id) => {
+const postAddQuestion = async (employee, timeLimit, question, title, id) => {
   const key = datastore.key([QUIZ, parseInt(id, 10)]);
   const newQuiz = {
     employee: employee,
     timeLimit: timeLimit,
     question: question,
+    title: title,
   };
   await datastore.save({ key: key, data: newQuiz });
   return key;
