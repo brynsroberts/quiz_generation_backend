@@ -366,7 +366,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"employee\": \"{{employee_1}}\",\r\n  \"timeLimit\": 10,\r\n  \"question\": []\r\n}"
+					"raw": "{\r\n  \"employee\": \"{{employee_1}}\",\r\n  \"timeLimit\": 10,\r\n  \"question\": [],\r\n  \"title\": \"Math Quiz\"\r\n}"
 				},
 				"url": {
 					"raw": "{{app_url}}/quiz",
@@ -449,7 +449,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"timeLimit\": 10,\r\n  \"question\": []\r\n}"
+					"raw": "{\r\n  \"timeLimit\": 10,\r\n  \"question\": [],\r\n  \"title\": \"Math Quiz\"\r\n}"
 				},
 				"url": {
 					"raw": "{{app_url}}/quiz",
@@ -492,7 +492,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"employee\": \"{{employee_1}}\",\r\n  \"question\": []\r\n}"
+					"raw": "{\r\n  \"employee\": \"{{employee_1}}\",\r\n  \"question\": [],\r\n  \"title\": \"Math Quiz\"\r\n}"
 				},
 				"url": {
 					"raw": "{{app_url}}/quiz",
@@ -535,7 +535,50 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"employee\": \"{{employee_1}}\",\r\n  \"timeLimit\": 10\r\n}"
+					"raw": "{\r\n  \"employee\": \"{{employee_1}}\",\r\n  \"timeLimit\": 10,\r\n  \"title\": \"Math Quiz\"\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/quiz",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"quiz"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "error if adding quiz with missing title field in body",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"employee\": \"{{employee_1}}\",\r\n  \"timeLimit\": 10,\r\n  \"question\": []\r\n}"
 				},
 				"url": {
 					"raw": "{{app_url}}/quiz",
@@ -578,7 +621,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"employee\": \"1\",\r\n  \"timeLimit\": 10,\r\n  \"question\": []\r\n}"
+					"raw": "{\r\n  \"employee\": \"1\",\r\n  \"timeLimit\": 10,\r\n  \"question\": [],\r\n  \"title\": \"Math Quiz\"\r\n}"
 				},
 				"url": {
 					"raw": "{{app_url}}/quiz",
@@ -1116,7 +1159,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"employee\": \"{{employee_1}}\",\r\n  \"timeLimit\": 10,\r\n  \"question\": []\r\n}"
+					"raw": "{\r\n  \"employee\": \"{{employee_1}}\",\r\n  \"timeLimit\": 10,\r\n  \"question\": [],\r\n  \"title\": \"Math Quiz\"\r\n}"
 				},
 				"url": {
 					"raw": "{{app_url}}/quiz",
@@ -1288,7 +1331,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"type\": 1,\r\n  \"points\": 5,\r\n  \"question\": \"Is 2 + 2 equal to 4?\",\r\n  \"answer\": true\r\n}"
+					"raw": ""
 				},
 				"url": {
 					"raw": "{{app_url}}/quiz/{{quiz_1}}/question/{{question_type_1}}",
@@ -1623,7 +1666,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"employee\": \"{{employee_1}}\",\r\n  \"timeLimit\": 10,\r\n  \"question\": []\r\n}"
+					"raw": "{\r\n  \"employee\": \"{{employee_1}}\",\r\n  \"timeLimit\": 10,\r\n  \"question\": [],\r\n  \"title\": \"Math Quiz\"\r\n}"
 				},
 				"url": {
 					"raw": "{{app_url}}/quiz",
@@ -1844,7 +1887,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"employee\": \"{{employee_1}}\",\r\n  \"timeLimit\": 10,\r\n  \"question\": []\r\n}"
+					"raw": "{\r\n  \"employee\": \"{{employee_1}}\",\r\n  \"timeLimit\": 10,\r\n  \"question\": [],\r\n  \"title\": \"Math Quiz\"\r\n}"
 				},
 				"url": {
 					"raw": "{{app_url}}/quiz",
