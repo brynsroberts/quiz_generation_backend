@@ -1,4 +1,5 @@
 const express = require("express");
+var cors = require("cors");
 const bodyParser = require("body-parser");
 
 const questionRoutes = require("./routes/question");
@@ -7,6 +8,7 @@ const employeeRoutes = require("./routes/employee");
 const errorHandler = require("./error/error-handler");
 
 const app = express();
+app.use(cors());
 app.enable("trust proxy");
 
 app.use(bodyParser.json());
