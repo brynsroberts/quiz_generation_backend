@@ -13,6 +13,18 @@ const getSingleEmployee = async (id) => {
 };
 
 const postSingleEmployee = async (name, email) => {
+  // get all employees already added to the datastore
+  const query = datastore.createQuery(EMPLOYEE);
+  const allEmployees = await datastore.runQuery(query);
+
+  // if an employee already has that email - return that employee without adding a new one to datastore
+  for (const user of allEmployees[0]) {
+    if (user["email"] === email) {
+      return user[Datastore.KEY];
+    }
+  }
+
+  // it is a new email - add to datastore
   const key = datastore.key(EMPLOYEE);
   const newEmployee = {
     name: name,
